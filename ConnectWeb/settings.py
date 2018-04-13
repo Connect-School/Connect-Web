@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'responsabilidade.apps.ResponsabilidadeConfig',
     'escola.apps.EscolaConfig',
+    'secretaria.apps.SecretariaConfig',
+    'dired.apps.DiredConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

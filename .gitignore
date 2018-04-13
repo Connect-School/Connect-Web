@@ -14,3 +14,5 @@ core/migrations/__pycache__/
 escola/__pycache__/
 
 escola/migrations/__pycache__/
+
+*.pyc

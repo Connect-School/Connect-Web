@@ -3,45 +3,49 @@ from polymorphic.models import PolymorphicModel
 
 
 class Responsavel(PolymorphicModel):
-    poly_type = models.CharField(max_length=40)
+    pass
 
-    # def get_name(self):
-    #     return eval("self.{}.get_name()".format(self.poly_type))
-
-    # def __str__(self):
-    #     return self.get_name()
 
 class PaiResponsavel(Responsavel):
 
     def __str__(self):
-        return self.pai.get_name()
+        if hasattr(self, 'pai'):
+            return self.pai.get_name()
+        return ""
+
 
 class EscolaResponsavel(Responsavel):
 
     def __str__(self):
-        return self.escola.get_name()
+        if hasattr(self, 'escola'):
+            return self.escola.get_name()
+        return ""
+
 
 class Dependente(PolymorphicModel):
-    poly_type = models.CharField(max_length=40)
-    responsavel = models.ForeignKey(Responsavel, related_name="dependentes", null=True, blank=True, on_delete=models.PROTECT)
+    responsavel = models.ForeignKey(Responsavel, related_name="dependentes",
+                                    null=True, blank=True, on_delete=models.PROTECT)
 
-    # def get_name(self):
-    #     return eval("self.{}.get_name()".format(self.poly_type))
-    #
-    # def __str__(self):
-    #     return self.get_name()
 
 class EscolaDependente(Dependente):
 
     def __str__(self):
-        return self.escola.get_name()
+        if hasattr(self, 'escola'):
+            return self.escola.get_name()
+        return ""
+
 
 class ProfessorDependente(Dependente):
 
     def __str__(self):
-        return self.professor.get_name()
+        if hasattr(self, 'professor'):
+            return self.professor.get_name()
+        return ""
+
 
 class AlunoDependente(Dependente):
 
     def __str__(self):
-        return self.aluno.get_name()
+        if hasattr(self, 'aluno'):
+            return self.aluno.get_name()
+        return ""

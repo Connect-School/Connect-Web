@@ -40,6 +40,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'core.apps.CoreConfig',
+    'responsabilidade.apps.ResponsabilidadeConfig',
     'escola.apps.EscolaConfig',
     'django.contrib.admin',
     'django.contrib.auth',

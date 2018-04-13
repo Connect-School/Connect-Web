@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'escola.apps.EscolaConfig',
     'secretaria.apps.SecretariaConfig',
     'dired.apps.DiredConfig',
+    'api.apps.ApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

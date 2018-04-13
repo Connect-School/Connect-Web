@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dired.models import Dired, GerenteDired
+from .models import Dired, GerenteDired
 
 
 admin.site.register(Dired)

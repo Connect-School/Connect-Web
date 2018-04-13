@@ -1,3 +1,6 @@
 from django.contrib import admin
+from secretaria.models import Secretaria, GerenteSecretaria
 
-# Register your models here.
+
+admin.site.register(Secretaria)
+admin.site.register(GerenteSecretaria)

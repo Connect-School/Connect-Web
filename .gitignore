@@ -4,3 +4,13 @@
 env/
 
 ConnectWeb/config\.py
+
+ConnectWeb/__pycache__/
+
+core/__pycache__/
+
+core/migrations/__pycache__/
+
+escola/__pycache__/
+
+escola/migrations/__pycache__/

@@ -35,18 +35,12 @@ class Aviso(Informavel):
 
 
 class Notificacao(models.Model):
-    usuarios = models.ManyToManyField(Usuario, related_name='notificacoes', through='UsuarioNotificacao')
-    aviso = models.OneToOneField(MensagemIdentificada, related_name="notificacao", null=True, blank=True, on_delete=models.PROTECT)
+    usuario = models.ForeignKey(Usuario, related_name="notificacoes", on_delete=models.CASCADE)
+    aviso = models.ForeignKey(Aviso, related_name="notificacoes", null=True, blank=True, on_delete=models.PROTECT)
+    read = models.BooleanField(default=False)
 
     def __str__(self):
         return "Notificacao: {}\n".format(self.aviso)
-
-class UsuarioNotificacao(models.Model):
-    class Meta:
-        db_table = 'users_notifications'
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    notificacao = models.ForeignKey(Notificacao, on_delete=models.CASCADE)
-    read = models.BooleanField(default=False)
 
 
 class InformavelResolvivel(Informavel):
@@ -77,6 +71,7 @@ class Bullying(InformavelResolvivel):
 class InformavelForum(InformavelResolvivel):
     responsavel = models.ForeignKey(Responsavel, related_name="foruns", null=True, blank=True,
                                     on_delete=models.CASCADE)
+    criador = models.ForeignKey(Usuario, related_name="foruns_criados", on_delete=models.CASCADE)
     TIPO = Choices(('reclamacao', ('Reclamação')), ('sugestao', ('Sugestão')), ('solicitacao', ('Solicitação')))
     tipo = models.CharField(choices=TIPO, default=TIPO.reclamacao, max_length=11)
 

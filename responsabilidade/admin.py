@@ -10,6 +10,8 @@ admin.site.register(AlunoDependente)
 
 admin.site.register(ProfessorDependente)
 
+admin.site.register(GerenteEscolaDependente)
+
 admin.site.register(EscolaResponsavel)
 admin.site.register(EscolaDependente)
 

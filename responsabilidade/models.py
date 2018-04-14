@@ -59,6 +59,14 @@ class ProfessorDependente(Dependente):
         return ""
 
 
+class GerenteEscolaDependente(Dependente):
+
+    def __str__(self):
+        if hasattr(self, 'gerente_escola'):
+            return self.gerente_escola.get_name()
+        return ""
+
+
 class EscolaDependente(Dependente):
 
     def __str__(self):
@@ -73,3 +81,5 @@ class SecretariaDependente(Dependente):
         if hasattr(self, 'secretaria'):
             return self.secretaria.get_name()
         return ""
+
+

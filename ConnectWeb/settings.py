@@ -33,7 +33,7 @@ SECRET_KEY = 'eq(zy97+tp5j*n^_dx+(-qm*e6#5p!$sj^*65w+a#o$0$xu5*d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.0.5", "127.0.0.1", "0.0.0.0"]
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'secretaria.apps.SecretariaConfig',
     'dired.apps.DiredConfig',
     'api.apps.ApiConfig',
+    'public.apps.PublicConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,7 +80,7 @@ ROOT_URLCONF = 'ConnectWeb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_PATH,],
+        'DIRS': [TEMPLATE_PATH, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

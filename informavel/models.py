@@ -52,11 +52,18 @@ class InformavelResolvivel(Informavel):
                                     on_delete=models.CASCADE)
     read = models.BooleanField(default=False)
 
+    @property
+    def is_bullying(self):
+        if isinstance(self, Bullying):
+            return True
+        return False
+
     def __str__(self):
-        return "Informavel resolvivel ({}) para {}".format(self.pk, self.responsavel.get_name())
+        return "Informavel resolvivel ({})".format(self.pk)
 
 
 class Bullying(InformavelResolvivel):
+
     mensagem = models.OneToOneField(Mensagem, related_name="bullying", null=True, blank=True, on_delete=models.PROTECT)
     # TODO AssuntoUsuario (?)
 

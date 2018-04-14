@@ -5,7 +5,9 @@ from polymorphic.models import PolymorphicModel
 
 # Create your models here.
 class Organizacao(PolymorphicModel):
-    pass
+
+    def get_tipo(self):
+        return None
 
 
 class Usuario(PolymorphicModel):
@@ -16,6 +18,12 @@ class Usuario(PolymorphicModel):
 
     def __str__(self):
         return self.get_name()
+
+
+class Gerente(Usuario):
+
+    def get_organizacao(self):
+        return None
 
 
 class Pai(Usuario):

@@ -14,12 +14,12 @@ def index(request):
 
     context['organizacao'] = usuario.get_organizacao()
     context['tipo_organizacao'] = usuario.get_organizacao().get_tipo()
-    resolviveis = usuario.resolviveis.all()
 
     context['usuario'] = usuario
-
-    # context['notificacoes'] = usuario.notificacoes
-
     context['foruns'] = []
+
+    for forum in usuario.get_organizacao().perfil_responsavel.foruns.all():
+        if forum.usuario_has_access(usuario):
+            context['foruns'].append(forum)
 
     return render(request, 'escola/index.html', context)

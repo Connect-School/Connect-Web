@@ -6,33 +6,79 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-mdd-6">
-        notificacao
-        <ul>
-        {% for notificacao in usuario.notificacoes.all %}
-            <li>{{ notificacao }}</li>
-        {% endfor %}
-        </ul>
-        bullying
-        <ul>
-        {% for resolvivel in usuario.resolviveis.all %}
-            {% if resolvivel.is_bullying %}
-            <li>{{ resolvivel }}</li>
-            {% endif %}
-        {% endfor %}
-        </ul>
-        da organizacao
-        <ul>
-        {% for forum in organizacao.foruns_organizacao.all %}
-            <li>{{ forum }}</li>
-        {% endfor %}
-        </ul>
-        Responsavel por
-        <ul>
-        {% for forum in usuario.foruns_usuario.all %}
-            <li>{{ forum }}</li>
-        {% endfor %}
-        </ul>
+    <div class="col-md-12">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation"><a href="#">Cadastrar Aviso</a></li>
+                <li role="presentation"><a href="#">Cadastrar Forum</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <ul class="nav nav-tabs nav-justified">
+                <li role="presentation" class="active"><a href="#foruns">Foruns</a></li>
+                <li role="presentation"><a href="#avisos">Avisos</a></li>
+                <li role="presentation"><a href="#bullying">Bullying</a></li>
+            </ul>
+            <section id="foruns" class="tab-content active">
+                <div class="text-center">
+                    <ul>
+                    {% for forum in foruns %}
+                        <li>{{ forum }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </section>
+            <section id="avisos" class="tab-content hide">
+                <div class="text-center">
+                    <ul>
+                    {% for notificacao in usuario.notificacoes.all %}
+                        <li>{{ notificacao }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </section>
+            <section id="bullying" class="tab-content hide">
+                <div class="text-center">
+                    <ul>
+                    {% for resolvivel in usuario.resolviveis.all %}
+                        {% if resolvivel.is_bullying %}
+                        <li>{{ resolvivel }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            </section>
+        </div>
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+
+	$(document).ready(function() {
+		$('.nav-tabs > li > a').click(function(event){
+		event.preventDefault();//stop browser to take action for clicked anchor
+
+		//get displaying tab content jQuery selector
+		var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
+
+		//find actived navigation and remove 'active' css
+		var actived_nav = $('.nav-tabs > li.active');
+		actived_nav.removeClass('active');
+
+		//add 'active' css into clicked navigation
+		$(this).parents('li').addClass('active');
+
+		//hide displaying tab content
+		$(active_tab_selector).removeClass('active');
+		$(active_tab_selector).addClass('hide');
+
+		//show target tab content
+		var target_tab_selector = $(this).attr('href');
+		$(target_tab_selector).removeClass('hide');
+		$(target_tab_selector).addClass('active');
+	     });
+	  });
+
+</script>
 {% endblock %}

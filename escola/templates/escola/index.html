@@ -14,71 +14,72 @@
             </ul>
         </div>
         <div class="col-md-9">
-            <ul class="nav nav-tabs nav-justified">
-                <li role="presentation" class="active"><a href="#foruns">Foruns</a></li>
-                <li role="presentation"><a href="#avisos">Avisos</a></li>
-                <li role="presentation"><a href="#bullying">Bullying</a></li>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#foruns">Foruns</a></li>
+                <li><a data-toggle="tab" href="#avisos">Avisos</a></li>
+                <li><a data-toggle="tab" href="#bullying">Bullying</a></li>
             </ul>
-            <section id="foruns" class="tab-content active">
-                <div class="text-center">
-                    <ul>
-                    {% for forum in foruns %}
-                        <li>{{ forum }}</li>
-                    {% endfor %}
-                    </ul>
+            <div class="tab-content">
+                <div id="foruns" class="tab-pane fade in active">
+                    <div class="col-md-8 col-md-offset-2">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <th>Criador</th>
+                                <th>Encarregado</th>
+                                <th>Assunto</th>
+                                <th>Ação</th>
+                            </tr>
+                            {% for forum in foruns %}
+                            <tr>
+                                <td>{{ forum.criador }}</td>
+                                <td>{{ forum.encarregado }}</td>
+                                <td>{{ forum.assunto }}</td>
+                                <td><a href="#" class="btn btn-info">Detalhar</a></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
-            </section>
-            <section id="avisos" class="tab-content hide">
-                <div class="text-center">
-                    <ul>
-                    {% for notificacao in usuario.notificacoes.all %}
-                        <li>{{ notificacao }}</li>
-                    {% endfor %}
-                    </ul>
+                <div id="avisos" class="tab-pane fade">
+                    <div class="col-md-6 col-md-offset-3">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <th>Vista</th>
+                                <th>Remetente</th>
+                                <th>Ação</th>
+                            </tr>
+                            {% for notificacao in usuario.notificacoes.all %}
+                            <tr>
+                                <td>{{ notificacao.read }}</td>
+                                <td>{{ notificacao.aviso.mensagem.criador }}</td>
+                                <td><a href="#" class="btn btn-info">Abrir</a></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
-            </section>
-            <section id="bullying" class="tab-content hide">
-                <div class="text-center">
-                    <ul>
-                    {% for resolvivel in usuario.resolviveis.all %}
-                        {% if resolvivel.is_bullying %}
-                        <li>{{ resolvivel }}</li>
-                        {% endif %}
-                    {% endfor %}
-                    </ul>
+                <div id="bullying" class="tab-pane fade">
+                    <div class="col-md-4 col-md-offset-4">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <th>Visto</th>
+                                <th>Ação</th>
+                            </tr>
+                            {% for resolvivel in usuario.resolviveis.all %}
+                            {% if resolvivel.is_bullying %}
+                            <tr>
+                                <td>{{ resolvivel.read }}</td>
+                                <td><a href="#" class="btn btn-info">Abrir</a></td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
 {% block scripts %}
-<script>
-
-	$(document).ready(function() {
-		$('.nav-tabs > li > a').click(function(event){
-		event.preventDefault();//stop browser to take action for clicked anchor
-
-		//get displaying tab content jQuery selector
-		var active_tab_selector = $('.nav-tabs > li.active > a').attr('href');
-
-		//find actived navigation and remove 'active' css
-		var actived_nav = $('.nav-tabs > li.active');
-		actived_nav.removeClass('active');
-
-		//add 'active' css into clicked navigation
-		$(this).parents('li').addClass('active');
-
-		//hide displaying tab content
-		$(active_tab_selector).removeClass('active');
-		$(active_tab_selector).addClass('hide');
-
-		//show target tab content
-		var target_tab_selector = $(this).attr('href');
-		$(target_tab_selector).removeClass('hide');
-		$(target_tab_selector).addClass('active');
-	     });
-	  });
-
-</script>
 {% endblock %}

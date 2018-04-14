@@ -6,6 +6,8 @@ admin.site.register(Mensagem)
 admin.site.register(MensagemIdentificada)
 admin.site.register(MensagemForum)
 
+admin.site.register(Notificacao)
+admin.site.register(UsuarioNotificacao)
 
 admin.site.register(Informavel)
 admin.site.register(Aviso)

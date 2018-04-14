@@ -69,7 +69,7 @@ class Bullying(InformavelResolvivel):
 
 
     def __str__(self):
-        return "Mensagem anônima ({}) para {}".format(self.pk, self.responsavel.get_name())
+        return "Mensagem anônima ({}) para {}".format(self.pk, self.encarregado.get_name())
 
 
 class InformavelForum(InformavelResolvivel):
@@ -88,8 +88,8 @@ class MensagemForum(MensagemIdentificada):
 
 
 class InformavelForumOrganizacao(InformavelForum):
-    assunto = models.ForeignKey(Organizacao, on_delete=models.CASCADE)
+    assunto = models.ForeignKey(Organizacao, related_name="foruns_organizacao", on_delete=models.CASCADE)
 
 
 class InformavelForumUsuario(InformavelForum):
-    assunto = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    assunto = models.ForeignKey(Usuario, related_name="foruns_usuario", on_delete=models.CASCADE)

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block home %}
+<a href="/{{ tipo_organizacao }}" class="navbar-brand">{{ organizacao.nome }}</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-mdd-6">
+        notificacao
+        <ul>
+        {% for notificacao in usuario.notificacoes.all %}
+            <li>{{ notificacao }}</li>
+        {% endfor %}
+        </ul>
+        bullying
+        <ul>
+        {% for resolvivel in usuario.resolviveis.all %}
+            {% if resolvivel.is_bullying %}
+            <li>{{ resolvivel }}</li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+        da organizacao
+        <ul>
+        {% for forum in organizacao.foruns_organizacao.all %}
+            <li>{{ forum }}</li>
+        {% endfor %}
+        </ul>
+        Responsavel por
+        <ul>
+        {% for forum in usuario.foruns_usuario.all %}
+            <li>{{ forum }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

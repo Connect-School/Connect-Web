@@ -35,6 +35,7 @@ class Aviso(Informavel):
 
 class Notificacao(models.Model):
     usuarios = models.ManyToManyField(Usuario, related_name='notificacoes', through='UsuarioNotificacao')
+    aviso = models.OneToOneField(MensagemIdentificada, related_name="notificacao", null=True, blank=True, on_delete=models.PROTECT)
 
 
 class UsuarioNotificacao(models.Model):
@@ -47,7 +48,7 @@ class UsuarioNotificacao(models.Model):
 
 class InformavelResolvivel(Informavel):
     responsavel = models.ForeignKey(Usuario, related_name="resolviveis", on_delete=models.CASCADE)
-    read = models.BooleanField(default=False)
+
 
     def __str__(self):
         return "Informavel resolvivel ({}) para {}".format(self.pk, self.responsavel.get_name())
@@ -72,6 +73,7 @@ class InformavelForum(InformavelResolvivel):
 
 class MensagemForum(MensagemIdentificada):
     forum = models.ForeignKey(InformavelForum, related_name="mensagens", on_delete=models.CASCADE)
+    read = models.BooleanField(default=False)
 
     def __str__(self):
         return "Mensagem ({}) de {} para forum ({})".format(self.pk, self.criador.get_name(), self.forum.pk)

@@ -80,6 +80,9 @@ class InformavelForum(InformavelResolvivel):
     TIPO = Choices(('reclamacao', ('Reclamação')), ('sugestao', ('Sugestão')), ('solicitacao', ('Solicitação')))
     tipo = models.CharField(choices=TIPO, default=TIPO.reclamacao, max_length=11)
 
+    def usuario_has_access(self, usuario):
+        return None
+
     def __str__(self):
         return "Forum ({})".format(self.pk)
 
@@ -94,11 +97,22 @@ class MensagemForum(MensagemIdentificada):
 class InformavelForumOrganizacao(InformavelForum):
     assunto = models.ForeignKey(Organizacao, related_name="foruns_organizacao", on_delete=models.CASCADE)
 
+    def usuario_has_access(self, usuario):
+        if usuario.get_organizacao() == self.assunto:
+            return True
+        return False
+
     def __str__(self):
         return "Forum ({}) de {} sobre {}".format(self.pk, self.tipo, self.assunto)
 
 class InformavelForumUsuario(InformavelForum):
     assunto = models.ForeignKey(Usuario, related_name="foruns_usuario", on_delete=models.CASCADE)
+
+    def usuario_has_access(self, usuario):
+        if self.tipo == 'reclamacao':
+            if usuario == self.assunto:
+                return False
+        return True
 
     def __str__(self):
         return "Forum ({}) de {} sobre {}".format(self.pk, self.tipo, self.assunto)

@@ -12,4 +12,5 @@ urlpatterns = [
     path('escola/', include('escola.urls')),
     path('secretaria/', include('secretaria.urls')),
     path('dired/', include('dired.urls')),
+    path('informavel/', include('informavel.urls')),
 ]

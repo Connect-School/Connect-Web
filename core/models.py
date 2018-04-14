@@ -17,6 +17,7 @@ class Usuario(PolymorphicModel):
     def __str__(self):
         return self.get_name()
 
+
 class Pai(Usuario):
     perfil_responsavel = models.OneToOneField(PaiResponsavel, related_name="pai", null=True, blank=True, on_delete=models.PROTECT)
 

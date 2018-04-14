@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import Usuario, Organizacao
+from core.models import Usuario, Organizacao, Gerente
 from responsabilidade.models import EscolaResponsavel, EscolaDependente, ProfessorDependente
 
 
@@ -13,12 +13,20 @@ class Escola(Organizacao):
     def get_name(self):
         return self.nome
 
+    def get_tipo(self):
+        return "escola"
+
     def __str__(self):
         return self.get_name()
 
 
-class GerenteEscola(Usuario):
+class GerenteEscola(Gerente):
+    perfil_dependente = models.OneToOneField(ProfessorDependente, related_name="gerente_escola", null=True, blank=True,
+                                             on_delete=models.PROTECT)
     escola = models.ForeignKey(Escola, related_name="gerentes", null=True, blank=True, on_delete=models.PROTECT)
+
+    def get_organizacao(self):
+        return self.escola
 
 
 class Professor(Usuario):

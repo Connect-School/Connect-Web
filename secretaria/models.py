@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import Organizacao, Usuario
+from core.models import Organizacao, Gerente
 from responsabilidade.models import SecretariaResponsavel, SecretariaDependente
 
 # Create your models here.
@@ -13,8 +13,14 @@ class Secretaria(Organizacao):
     def get_name(self):
         return self.nome
 
+    def get_tipo(self):
+        return 'secretaria'
+
     def __str__(self):
         return self.get_name()
 
-class GerenteSecretaria(Usuario):
+class GerenteSecretaria(Gerente):
     secretaria = models.ForeignKey(Secretaria, related_name="gerentes", null=True, blank=True, on_delete=models.PROTECT)
+
+    def get_organizacao(self):
+        return self.secretaria

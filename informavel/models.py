@@ -1,46 +1,85 @@
 from django.db import models
 from polymorphic.models import PolymorphicModel
+from core.models import Usuario, Organizacao
+from model_utils import Choices
 
 
-class Assunto(PolymorphicModel):
-    pass
+class Mensagem(PolymorphicModel):
+    texto = models.CharField(max_length=255)
+    data = models.DateTimeField()
+
+    def __str__(self):
+        return "Mensagem ({})".format(self.pk)
 
 
-class AssuntoUsuario(Assunto):
-    pass
+class MensagemIdentificada(Mensagem):
+    criador = models.ForeignKey(Usuario, related_name="mensagens_identificadas", on_delete=models.CASCADE)
 
-
-class AssuntoOrganizacao(Assunto):
-    pass
+    def __str__(self):
+        return "Mensagem ({}) de {}".format(self.pk, self.criador.get_name())
 
 
 class Informavel(PolymorphicModel):
-    pass
+
+    def __str__(self):
+        return "Informavel ({})".format(self.pk,)
 
 
-class InformavelUnico(Informavel):
-    pass
+class Aviso(Informavel):
+    mensagem = models.OneToOneField(MensagemIdentificada, related_name="aviso", null=True, blank=True,
+                                    on_delete=models.PROTECT)
+
+    def __str__(self):
+        return "Aviso ({}) de {}".format(self.pk, self.mensagem.criador.get_name())
 
 
-class Bullying(InformavelUnico):
-    pass
+class Notificacao(models.Model):
+    usuarios = models.ManyToManyField(Usuario, related_name='notificacoes', through='UsuarioNotificacao')
 
 
-class Aviso(InformavelUnico):
-    pass
+class UsuarioNotificacao(models.Model):
+    class Meta:
+        db_table = 'users_notifications'
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    notificacao = models.ForeignKey(Notificacao, on_delete=models.CASCADE)
+    read = models.BooleanField(default=False)
 
 
-class InformavelForum(Informavel):
-    pass
+class InformavelResolvivel(Informavel):
+    responsavel = models.ForeignKey(Usuario, related_name="resolviveis", on_delete=models.CASCADE)
+    read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "Informavel resolvivel ({}) para {}".format(self.pk, self.responsavel.get_name())
 
 
-class Reclamacao(InformavelForum):
-    pass
+class Bullying(InformavelResolvivel):
+    mensagem = models.OneToOneField(Mensagem, related_name="bullying", null=True, blank=True, on_delete=models.PROTECT)
+    # TODO AssuntoUsuario (?)
 
 
-class Sugestao(InformavelForum):
-    pass
+    def __str__(self):
+        return "Mensagem anônima ({}) para {}".format(self.pk, self.responsavel.get_name())
 
 
-class Solicitacao(InformavelForum):
-    pass
+class InformavelForum(InformavelResolvivel):
+    TIPO = Choices(('reclamacao', ('Reclamação')), ('sugestao', ('Sugestão')), ('solicitacao', ('Solicitação')))
+    tipo = models.CharField(choices=TIPO, default=TIPO.reclamacao, max_length=11)
+
+    def __str__(self):
+        return "Forum ({})".format(self.pk)
+
+
+class MensagemForum(MensagemIdentificada):
+    forum = models.ForeignKey(InformavelForum, related_name="mensagens", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "Mensagem ({}) de {} para forum ({})".format(self.pk, self.criador.get_name(), self.forum.pk)
+
+
+class InformavelForumOrganizacao(InformavelForum):
+    assunto = models.ForeignKey(Organizacao, on_delete=models.CASCADE)
+
+
+class InformavelForumUsuario(InformavelForum):
+    assunto = models.ForeignKey(Usuario, on_delete=models.CASCADE)

@@ -1,11 +1,10 @@
 from django.db import models
 from core.models import Organizacao, Gerente
-from responsabilidade.models import SecretariaResponsavel, SecretariaDependente
+from responsabilidade.models import SecretariaResponsavel
 
 # Create your models here.
 class Secretaria(Organizacao):
     perfil_responsavel = models.OneToOneField(SecretariaResponsavel, related_name="secretaria", null=True, blank=True, on_delete=models.PROTECT)
-    perfil_dependente = models.OneToOneField(SecretariaDependente, related_name="secretaria", null=True, blank=True, on_delete=models.PROTECT)
     nome = models.CharField(max_length=50)
     endereco = models.CharField(max_length=50)
     telefone = models.CharField(max_length=16)

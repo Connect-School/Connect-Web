@@ -22,19 +22,19 @@ class EscolaResponsavel(Responsavel):
         return ""
 
 
-class SecretariaResponsavel(Responsavel):
-
-    def __str__(self):
-        if hasattr(self, 'secretaria'):
-            return self.secretaria.get_name()
-        return ""
-
-
 class DiredResponsavel(Responsavel):
 
     def __str__(self):
         if hasattr(self, 'dired'):
             return self.dired.get_name()
+        return ""
+
+
+class SecretariaResponsavel(Responsavel):
+
+    def __str__(self):
+        if hasattr(self, 'secretaria'):
+            return self.secretaria.get_name()
         return ""
 
 
@@ -75,11 +75,11 @@ class EscolaDependente(Dependente):
         return ""
 
 
-class SecretariaDependente(Dependente):
+class DiredDependente(Dependente):
 
     def __str__(self):
-        if hasattr(self, 'secretaria'):
-            return self.secretaria.get_name()
+        if hasattr(self, 'dired'):
+            return self.dired.get_name()
         return ""
 
 

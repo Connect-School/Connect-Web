@@ -15,7 +15,7 @@ admin.site.register(GerenteEscolaDependente)
 admin.site.register(EscolaResponsavel)
 admin.site.register(EscolaDependente)
 
-admin.site.register(SecretariaResponsavel)
-admin.site.register(SecretariaDependente)
-
 admin.site.register(DiredResponsavel)
+admin.site.register(DiredDependente)
+
+admin.site.register(SecretariaResponsavel)

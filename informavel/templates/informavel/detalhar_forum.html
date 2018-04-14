@@ -6,8 +6,23 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-mdd-6">
-        INFORMAVEL
+    <div class="col-md-2">
+
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><a href="#">Cadastrar Resposta</a></li>
+            <li role="presentation"><a href="#">Finalizar Fórum</a></li>
+        </ul>
+
+    </div>
+    <div class="col-md-10">
+        <ul class="list-group">
+            {% for mensagem in forum.mensagens.all %}
+            <li class="list-group-item list-group-item-warning">
+                <h4>{{ mensagem.criador }}</h4>
+                <p>{{ mensagem.texto }}</p>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}

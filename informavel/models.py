@@ -73,6 +73,8 @@ class Bullying(InformavelResolvivel):
 
 
 class InformavelForum(InformavelResolvivel):
+    responsavel = models.ForeignKey(Responsavel, related_name="foruns", null=True, blank=True,
+                                    on_delete=models.CASCADE)
     TIPO = Choices(('reclamacao', ('Reclamação')), ('sugestao', ('Sugestão')), ('solicitacao', ('Solicitação')))
     tipo = models.CharField(choices=TIPO, default=TIPO.reclamacao, max_length=11)
 

@@ -1,6 +1,7 @@
 from django.db import models
 from polymorphic.models import PolymorphicModel
 from core.models import Usuario, Organizacao
+from responsabilidade.models import Responsavel
 from model_utils import Choices
 
 
@@ -47,7 +48,8 @@ class UsuarioNotificacao(models.Model):
 
 
 class InformavelResolvivel(Informavel):
-    responsavel = models.ForeignKey(Usuario, related_name="resolviveis", on_delete=models.CASCADE)
+    encarregado = models.ForeignKey(Usuario, related_name="resolviveis", null=True, blank=True,
+                                    on_delete=models.CASCADE)
     read = models.BooleanField(default=False)
 
     def __str__(self):

@@ -1,6 +1,6 @@
 from django.db import models
 from core.models import Usuario, Organizacao, Gerente
-from responsabilidade.models import EscolaResponsavel, EscolaDependente, ProfessorDependente
+from responsabilidade.models import EscolaResponsavel, EscolaDependente, ProfessorDependente, GerenteEscolaDependente
 
 
 class Escola(Organizacao):
@@ -21,7 +21,7 @@ class Escola(Organizacao):
 
 
 class GerenteEscola(Gerente):
-    perfil_dependente = models.OneToOneField(ProfessorDependente, related_name="gerente_escola", null=True, blank=True,
+    perfil_dependente = models.OneToOneField(GerenteEscolaDependente, related_name="gerente_escola", null=True, blank=True,
                                              on_delete=models.PROTECT)
     escola = models.ForeignKey(Escola, related_name="gerentes", null=True, blank=True, on_delete=models.PROTECT)
 

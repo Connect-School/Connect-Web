@@ -38,6 +38,8 @@ class Notificacao(models.Model):
     usuarios = models.ManyToManyField(Usuario, related_name='notificacoes', through='UsuarioNotificacao')
     aviso = models.OneToOneField(MensagemIdentificada, related_name="notificacao", null=True, blank=True, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return "Notificacao: {}\n".format(self.aviso)
 
 class UsuarioNotificacao(models.Model):
     class Meta:
@@ -92,6 +94,11 @@ class MensagemForum(MensagemIdentificada):
 class InformavelForumOrganizacao(InformavelForum):
     assunto = models.ForeignKey(Organizacao, related_name="foruns_organizacao", on_delete=models.CASCADE)
 
+    def __str__(self):
+        return "Forum ({}) de {} sobre {}".format(self.pk, self.tipo, self.assunto)
 
 class InformavelForumUsuario(InformavelForum):
     assunto = models.ForeignKey(Usuario, related_name="foruns_usuario", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "Forum ({}) de {} sobre {}".format(self.pk, self.tipo, self.assunto)

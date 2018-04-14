@@ -41,6 +41,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'responsabilidade.apps.ResponsabilidadeConfig',
+    'informavel.apps.InformavelConfig',
     'escola.apps.EscolaConfig',
     'secretaria.apps.SecretariaConfig',
     'dired.apps.DiredConfig',

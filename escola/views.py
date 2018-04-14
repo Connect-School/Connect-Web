@@ -15,6 +15,8 @@ def index(request):
     context['organizacao'] = usuario.get_organizacao()
     context['tipo_organizacao'] = usuario.get_organizacao().get_tipo()
 
+    context['notificacoes'] = usuario.notificacoes.all()
+
     context['usuario'] = usuario
     context['foruns'] = []
 
